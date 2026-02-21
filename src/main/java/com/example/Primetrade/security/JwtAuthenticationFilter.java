@@ -3,14 +3,9 @@ package com.example.Primetrade.security;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
-import org.springframework.security.authentication.
-        UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.
-        SecurityContextHolder;
-import org.springframework.security.core.userdetails.
-        UserDetails;
-import org.springframework.security.web.authentication.
-        WebAuthenticationDetailsSource;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -35,22 +30,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        final String authHeader =
-                request.getHeader("Authorization");
+        // ⭐ SKIP JWT CHECK FOR SWAGGER
+        String path = request.getServletPath();
+
+        if (path.startsWith("/v3/api-docs") ||
+                path.startsWith("/swagger-ui")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        final String authHeader = request.getHeader("Authorization");
 
         String email = null;
         String token = null;
 
-        if (authHeader != null &&
-                authHeader.startsWith("Bearer ")) {
-
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
             email = jwtUtil.extractEmail(token);
         }
 
         if (email != null &&
-                SecurityContextHolder.getContext()
-                        .getAuthentication() == null) {
+                SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetails userDetails =
                     userDetailsService.loadUserByUsername(email);
@@ -63,6 +63,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                 null,
                                 userDetails.getAuthorities()
                         );
+
                 SecurityContextHolder.getContext()
                         .setAuthentication(authToken);
             }
