@@ -61,7 +61,20 @@ public class TaskController {
 
         return new MessageResponse("Task deleted successfully");
     }
+    @PutMapping("/{id}")
+    public TaskResponse updateTask(
+            @PathVariable Long id,
+            @RequestBody Task task) {
 
+        Task updated = taskService.updateTask(id, task);
+
+        return new TaskResponse(
+                updated.getId(),
+                updated.getTitle(),
+                updated.getDescription(),
+                updated.getStatus()
+        );
+    }
     // =========================
     // ADMIN ONLY ENDPOINT
     // =========================
