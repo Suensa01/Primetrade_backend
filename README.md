@@ -11,7 +11,7 @@ This project demonstrates:
 - React frontend integration
 - Cloud deployment (Railway + Vercel)
 
----
+
 
 ## Live Demo
 
@@ -41,7 +41,6 @@ https://primetradebackend-production.up.railway.app/api/v1
 - Frontend: Vercel
 - Database: Railway MySQL
 
----
 
 ## Authentication & Roles
 
@@ -56,7 +55,6 @@ Roles:
 - USER 
 - ADMIN 
 
----
 
 ## API Endpoints
 
@@ -100,7 +98,6 @@ This project demonstrates:
 - React frontend integration
 - Cloud deployment (Railway + Vercel)
 
----
 
 ## Live Demo
 
@@ -110,7 +107,7 @@ https://primetrade-assign.vercel.app
 ### Backend API
 https://primetradebackend-production.up.railway.app/api/v1
 
----
+
 
 ## Tech Stack
 
@@ -132,7 +129,7 @@ https://primetradebackend-production.up.railway.app/api/v1
 - Frontend: Vercel
 - Database: Railway MySQL
 
----
+
 
 ## Authentication & Roles
 
@@ -147,37 +144,35 @@ Roles:
 - USER → normal task access
 - ADMIN → admin-only endpoints
 
----
+
 
 ## API Endpoints
 
 ### Auth
 
 | Method | Endpoint | Description |
-|---|---|---|
+
 | POST | /api/v1/auth/register | Register user |
 | POST | /api/v1/auth/login | Login & get JWT |
 
----
+
 
 ### Tasks (Protected)
 
 | Method | Endpoint | Description |
-|---|---|---|
+
 | GET | /api/v1/tasks | Get all tasks |
 | POST | /api/v1/tasks | Create task |
 | PUT | /api/v1/tasks/{id} | Update task |
 | DELETE | /api/v1/tasks/{id} | Delete task |
 
----
 
 ### Admin Only
 
 | Method | Endpoint |
-|---|---|
+
 | GET | /api/v1/tasks/admin |
 
----
 
 ## Project Structure
 
@@ -210,6 +205,35 @@ frontend
 ┣ api
 ┣ pages
 ┣ App.js
+
+## ⚙️ Setup Instructions
+
+### 1️.Clone repository
+
+### 2️.Configure Environment Variables
+SPRING_DATASOURCE_URL=
+SPRING_DATASOURCE_USERNAME=
+SPRING_DATASOURCE_PASSWORD=
+JWT_SECRET=
+
+### 3️.Run Project
+mvn spring-boot:run
+http://localhost:8080
+
+## Architecture
+This backend follows a layered architecture:
+
+- Controller Layer
+- Service Layer
+- Repository Layer
+- Security Layer (JWT)
+
+Designed to be scalable and modular.
+
+## Deployment
+
+- Backend hosted on Railway
+- Database hosted on Railway MySQL
 
 ##Author
 
