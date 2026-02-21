@@ -1,5 +1,6 @@
 package com.example.Primetrade.service.impl;
 
+import com.example.Primetrade.dto.response.AuthResponse;
 import com.example.Primetrade.entity.Role;
 import com.example.Primetrade.entity.User;
 import com.example.Primetrade.repository.UserRepository;
@@ -23,19 +24,15 @@ public class AuthServiceImpl implements AuthService {
         this.jwtUtil = jwtUtil;
     }
 
-    // REGISTER
     @Override
     public User register(User user) {
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.USER);
-
         return userRepository.save(user);
     }
 
-    // LOGIN + JWT
     @Override
-    public String login(String email, String password) {
+    public AuthResponse login(String email, String password) {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -44,6 +41,11 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Invalid password");
         }
 
-        return jwtUtil.generateToken(user.getEmail());
+        String token = jwtUtil.generateToken(user.getEmail());
+
+        return new AuthResponse(
+                token,
+                user.getRole().name()
+        );
     }
 }

@@ -17,21 +17,23 @@ public class AuthController {
         this.authService = authService;
     }
 
+    // =========================
     // REGISTER
+    // =========================
     @PostMapping("/register")
     public User register(@Valid @RequestBody User user) {
         return authService.register(user);
     }
 
-    // LOGIN (returns JWT)
+    // =========================
+    // LOGIN (JWT + ROLE)
+    // =========================
     @PostMapping("/login")
     public AuthResponse login(@RequestBody LoginRequest request) {
 
-        String token = authService.login(
+        return authService.login(
                 request.getEmail(),
                 request.getPassword()
         );
-
-        return new AuthResponse(token);
     }
 }
