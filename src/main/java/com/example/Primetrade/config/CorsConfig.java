@@ -16,7 +16,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(
-                List.of("http://localhost:3000","https://primetrade-assign.vercel.app/","https://primetrade-assign.vercel.app")
+                List.of("http://localhost:3000","https://primetrade-assign.vercel.app")
 
         );
 
